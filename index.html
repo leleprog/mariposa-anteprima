@@ -38,7 +38,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:20;padding-top:env(safe-area-
 body.home:not(.scrolled) header{background:transparent;backdrop-filter:none;border-color:transparent;color:#fff}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:24px;height:88px}
 .logo{flex:none;display:block;line-height:0}
-.logo img{height:72px;width:auto}
+.logo img{height:80px;width:auto}body.home:not(.scrolled) .logo img{filter:drop-shadow(0 1px 8px rgba(0,0,0,.45))}
 .logo .lw{display:none}
 body.home:not(.scrolled) .logo .lc{display:none}
 body.home:not(.scrolled) .logo .lw{display:block}
@@ -105,9 +105,11 @@ html:not(.entrato) body{overflow:hidden}
 .slides .sl.ct img{opacity:1;transition:none}
 .slides .sl.ct .bg{object-fit:cover;filter:blur(28px) saturate(1.05) brightness(.92);transform:scale(1.14)}
 .slides .sl.ct .fg{object-fit:contain}
-@media (max-aspect-ratio:1/1){.slides .sl.ct:not(.mu) .fg{object-fit:cover}}
+@media (max-aspect-ratio:1/1){.slides .sl.ct:not(.mu) .fg{object-fit:cover}.slides .sl.ct.mu .fg{object-position:50% 17%}}
 .hero .ht.mu{visibility:hidden}
 .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,16,17,.34) 0%,rgba(10,16,17,.18) 45%,rgba(10,16,17,0) 80%),linear-gradient(180deg,rgba(10,16,17,.28) 0%,rgba(10,16,17,0) 28%,rgba(10,16,17,.5) 100%)}
+.ar{position:absolute;top:50%;z-index:3;width:46px;height:46px;margin-top:-23px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(20,26,27,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:background .3s,color .3s}.ar:hover{background:#fff;color:#1F2A2B}.ar.pv{left:22px}.ar.nx2{right:22px}
+@media (max-width:860px){.ar{width:38px;height:38px;margin-top:-19px}.ar.pv{left:10px}.ar.nx2{right:10px}}
 .hero h1.frase{font-size:clamp(2.1rem,4.4vw,3.9rem);max-width:17ch;line-height:1.12;font-style:italic}
 .hero .ht{transition:opacity .7s ease,transform .7s ease}
 .hero .ht.out{opacity:0;transform:translateY(8px)}
@@ -209,7 +211,7 @@ footer.site .leg .todo{color:#E3D3A4}
 
 @media (max-width:860px){
   section{padding:80px 0}
-  .bar{height:72px}.logo img{height:54px}nav{gap:22px}
+  .bar{height:80px}.logo img{height:66px}nav{gap:22px}
   .intro{padding:110px 0 90px}
   .panels{overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:none}
   .panel{flex:0 0 72vw;scroll-snap-align:start}.panel:hover{flex-grow:0}
@@ -242,7 +244,7 @@ setTimeout(function(){b.focus({preventScroll:true})},50);
 b.addEventListener('click',function(){try{sessionStorage.setItem('mp-entrato','1')}catch(x){}window.scrollTo(0,0);r.classList.add('entrato');document.dispatchEvent(new Event('mp-entra'));setTimeout(function(){e.remove()},1200)})})();</script>
 <header>
   <div class="wrap bar">
-    <a class="logo" href="#top" aria-label="MaRiposa, torna alla home"><img class="lc" src="assets/logo/MaRiposa_head_dark.png" alt="MaRiposa"><img class="lw" src="assets/logo/MaRiposa_head_gold.png" alt=""></a>
+    <a class="logo" href="#top" aria-label="MaRiposa, torna alla home"><img class="lc" src="assets/logo/MaRiposa_full_gold.png" alt="MaRiposa – Manifatture che profumano di natura"><img class="lw" src="assets/logo/MaRiposa_full_gold.png" alt=""></a>
     <nav aria-label="Principale">
       <button id="open" aria-expanded="false" aria-controls="drawer"><span class="burger"></span>I nostri prodotti</button>
       <a href="#top">Home</a>
@@ -275,6 +277,8 @@ b.addEventListener('click',function(){try{sessionStorage.setItem('mp-entrato','1
     <div class="sl ct" data-kick="I nostri materassi" data-cap="Tulipano" data-slogan="La forza invisibile che ti accoglie con dolcezza." data-href="#materassi-tulipano"><img class="bg" data-k="s-tu" alt="" aria-hidden="true"><img class="fg" data-k="s-tu" alt="Materasso Tulipano"></div>
   </div>
   <div class="shade"></div>
+  <button class="ar pv" id="sprev" type="button" aria-label="Slide precedente"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l-8 8 8 8"/></svg></button>
+  <button class="ar nx2" id="snext" type="button" aria-label="Slide successiva"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4l8 8-8 8"/></svg></button>
   <div class="wrap hc">
     <div class="ht" id="ht">
       <p class="kick" id="hkick">Manifatture che profumano di natura</p>
@@ -392,7 +396,7 @@ document.querySelectorAll('img[data-k]').forEach(function(i){i.src=IMG[i.dataset
 var sl=[].slice.call(document.querySelectorAll('.sl'));
 var ht=$('ht'),hs=$('hsub'),HSUB=$('hsub').textContent,hk=$('hkick'),hc=$('hcap'),hl=$('hlink');
 function cap(e){var c=e.dataset;hk.textContent=c.kick||'Manifatture che profumano di natura';hc.textContent=c.cap||'';hc.classList.toggle('frase',!c.href);hs.textContent=c.slogan||HSUB;ht.classList.toggle('mu',!!c.mute);hs.style.visibility=c.mute?'hidden':'';if(c.href){hl.href=c.href;hl.hidden=false}else hl.hidden=true}
-cap(sl[0]);if(sl.length>1&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)){var n=0,go=0;function tick(){setTimeout(function(){sl[n].classList.remove('on');n=(n+1)%sl.length;sl[n].classList.add('on');ht.classList.add('out');setTimeout(function(){cap(sl[n]);ht.classList.remove('out')},700);tick()},+sl[n].dataset.dur||6500)}function start(){if(go)return;go=1;tick()}if(document.documentElement.classList.contains('entrato'))start();else document.addEventListener('mp-entra',start)}
+cap(sl[0]);var n=0,go=0,tm=0,rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;function show(k){if(k===n)return;sl[n].classList.remove('on');n=(k+sl.length)%sl.length;sl[n].classList.add('on');ht.classList.add('out');var m=n;setTimeout(function(){if(m===n){cap(sl[n]);ht.classList.remove('out')}},700)}function tick(){clearTimeout(tm);if(rm||!go)return;tm=setTimeout(function(){show(n+1);tick()},+sl[n].dataset.dur||6500)}function start(){if(go)return;go=1;tick()}var tx=null,hs0=document.querySelector('.hero');hs0.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});hs0.addEventListener('touchend',function(e){if(tx===null)return;var dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50){show(dx<0?n+1:n-1);tick()}},{passive:true});$('sprev').onclick=function(){show(n-1);tick()};$('snext').onclick=function(){show(n+1);tick()};if(document.documentElement.classList.contains('entrato'))start();else document.addEventListener('mp-entra',start);
 /* header trasparente sulla home */
 function sc(){b.classList.toggle('scrolled',window.scrollY>40)}window.addEventListener('scroll',sc,{passive:true});sc();
 /* menu */
